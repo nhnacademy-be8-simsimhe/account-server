@@ -1,5 +1,6 @@
 server:
   port: 8010
+  shutdown: graceful
 
 eureka:
   client:
@@ -9,6 +10,12 @@ eureka:
       defaultZone: http://127.0.0.1:8761/eureka
 
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+      base-path: /management
 
 spring:
   application:
@@ -47,6 +54,8 @@ spring:
         springframework:
           web: DEBUG
         springframework.security: DEBUG
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
 
 jwt:
