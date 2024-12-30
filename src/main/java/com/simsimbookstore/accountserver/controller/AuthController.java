@@ -1,21 +1,34 @@
 package com.simsimbookstore.accountserver.controller;
 
 
-import com.simsimbookstore.accountserver.request.LoginRequest;
-import com.simsimbookstore.accountserver.service.UserService;
-import lombok.AllArgsConstructor;
+import com.simsimbookstore.accountserver.properties.JwtProperties;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@AllArgsConstructor
-@RequestMapping("/api")
+import java.util.HashMap;
+import java.util.Map;
+
+@RequiredArgsConstructor
+@RequestMapping("/auth")
 @RestController
 public class AuthController {
-    private final UserService userService;
+    private final JwtProperties jwtProperties;
 
-    @PostMapping("/auth/jwt")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        boolean login = userService.login(loginRequest);
-        return ResponseEntity.ok(login);
+    //토큰 발급
+    @PostMapping("/users/localUsers/{loginId}/jwt")
+    public ResponseEntity<?> generateJwt(@PathVariable String loginId){
+
+        String accessToken = jwtProperties.generateAccessToken(loginId);
+        String refreshToken = jwtProperties.generateRefreshToken(loginId);
+        Map<String,String> tokenMap = new HashMap<>();
+        tokenMap.put("accessToken",accessToken);
+        tokenMap.put("refreshToken",refreshToken);
+
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.set("Authorization", "Bearer " + jwt);
+//        return new ResponseEntity<>(headers, HttpStatus.OK);
+
+        return ResponseEntity.ok(tokenMap);
     }
 }
