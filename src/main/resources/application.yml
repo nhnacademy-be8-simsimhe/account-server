@@ -22,7 +22,7 @@ management:
 
 spring:
   application:
-    name: account-server
+    name: auth-server
   datasource:
     url: jdbc:h2:mem:testdb
     username: sa
@@ -60,10 +60,9 @@ spring:
   lifecycle:
     timeout-per-shutdown-phase: 30s
 
-
 jwt:
   secret: super-strong-secret-key-that-is-256-bits-long!
-  expiration-time: 3600
-  token-prefix: bearer
-  header-string: Authorization
-  login-url: /api/login
+#  expiration-time: 3600
+#  token-prefix: bearer
+#  header-string: Authorization
+#  login-url: /api/login
