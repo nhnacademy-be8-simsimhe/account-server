@@ -8,6 +8,9 @@ eureka:
     fetch-registry: true
     service-url:
       defaultZone: http://127.0.0.1:8761/eureka
+  instance:
+    non-secure-port: ${server.port}
+    instance-id: AUTH-SERVER-${server.port}
 
 
 management:
