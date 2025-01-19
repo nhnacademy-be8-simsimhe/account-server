@@ -25,7 +25,7 @@ public class JwtProperties {
     private String secret;
 
     public String generateAccessToken(JwtGenerateRequestDto request) {
-        int expirationTime = 3600; // 1시간
+        int expirationTime = 20; // 1시간
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, expirationTime);
 
@@ -34,6 +34,7 @@ public class JwtProperties {
         Map<String, Object> claims = new HashMap<>();
         claims.put("isSocial", request.isSocial());
         claims.put("userId", request.getUserId());
+        claims.put("roles", request.getRoles());
 
         return Jwts.builder()
                 .subject(request.getSubject())
@@ -52,6 +53,7 @@ public class JwtProperties {
         Map<String, Object> claims = new HashMap<>();
         claims.put("isSocial", request.isSocial());
         claims.put("userId", request.getUserId());
+        claims.put("roles", request.getRoles());
         SecretKey secretKey = Keys.hmacShaKeyFor(secret.getBytes());
 
         return Jwts.builder()
