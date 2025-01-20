@@ -25,7 +25,7 @@ public class JwtProperties {
     private String secret;
 
     public String generateAccessToken(JwtGenerateRequestDto request) {
-        int expirationTime = 20; // 1시간
+        int expirationTime = 3600; // 1시간
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.SECOND, expirationTime);
 
